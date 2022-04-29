@@ -1,7 +1,5 @@
-# TEAM GRAMy
-
 # 팀원
-
+- 팀 : GRAMy
 - 박종재 (팀장, Front-End)
 - 김다빈 (Back-End, Android)
 - 김민석 (Back-End, Android)
