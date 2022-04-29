@@ -12,6 +12,9 @@
 
 ## 코드 컨벤션 (코드 작성 규칙)
 
+![functionwar](https://user-images.githubusercontent.com/66498240/165909713-87f17cdc-dbb5-44ba-b49f-11289b7eecfe.jpeg)
+
+
 <img width="777" alt="스크린샷 2022-04-29 오후 5 20 10" src="https://user-images.githubusercontent.com/66498240/165909329-f47ecf42-93ac-49b5-95db-da2b4e0f4c38.png">
 
 
