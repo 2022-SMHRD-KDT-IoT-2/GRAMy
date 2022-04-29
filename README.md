@@ -8,6 +8,10 @@
 
 # Rule
 
+<h4>백엔드 _backend 폴더에 프로젝트 진행</h4>
+<h4>프론트 _frontend 폴더에 프로젝트 진행</h4>
+<h4>안드로이드 _android 폴더에 프로젝트 진행</h4>
+
 ## 코드 컨벤션 (코드 작성 규칙)
 
 ![functionwar](https://user-images.githubusercontent.com/66498240/165909713-87f17cdc-dbb5-44ba-b49f-11289b7eecfe.jpeg)
