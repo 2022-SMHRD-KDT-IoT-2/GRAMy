@@ -15,10 +15,10 @@
 
 <img width="777" alt="스크린샷 2022-04-29 오후 5 20 10" src="https://user-images.githubusercontent.com/66498240/165909329-f47ecf42-93ac-49b5-95db-da2b4e0f4c38.png">
 
-
 - 변수 이름 "무조건" 명사로 짓기
 - 함수(메소드) 이름 "무조건" 동사
 - 의미없는 변수, 함수 이름 금지 ex) int a = 10;
+- boolean 타입 변수 접두사 `is` 사용하기
 
 ### Back-End
 
