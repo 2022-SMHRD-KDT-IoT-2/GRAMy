@@ -122,10 +122,10 @@ obj/
 **/idea/navEditor.xml
 
 # Legacy Eclipse project files
-*.classpath
-*.project
-*.cproject
-*.settings/
+.classpath
+.project
+.cproject
+.settings/
 
 # Mobile Tools for Java (J2ME)
 *.mtj.tmp/
