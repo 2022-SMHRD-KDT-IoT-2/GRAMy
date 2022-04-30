@@ -4,7 +4,6 @@ import DaumPostcode from "react-daum-postcode";
 const PopupPostCode = ({ onClose, setAddress, address }) => {
   const onComplete = (data) => {
     // 필요한 데이터 : data.address , zoneCode
-    console.log(data);
     setAddress({
       ...address,
       addr: data.address,

@@ -15,10 +15,15 @@ const PurchaseDetail = () => {
         <BoardTitle title="구매 문의 게시판" />
         <div className="w-full h-full bg-orange-300">
           {/* 게시글 번호, 제목 */}
-          <div className="w-full h-full flex justify-center items-center">
-            <span>번호</span>
-            <span>제목</span>
+          <div className="w-full h-full flex justify-center items-center ">
+            <div className="flex items-center justify-between bg-slate-400 w-[60%] h-8 px-10 font-semibold">
+              <div className="">1</div>
+              <div className="">얼마죠?</div>
+              <div className="">2022-04-30</div>
+            </div>
           </div>
+          {/* 게시글 내용 */}
+          <div>나도 몰러</div>
         </div>
       </div>
     </>
