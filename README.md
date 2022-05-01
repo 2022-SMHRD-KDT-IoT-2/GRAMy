@@ -1,3 +1,6 @@
+한 레포지토리에 3가지 프로젝트 소스 코드 관리가 쉽지 않을 것 같아서 따로 만들었습니다.
+-> https://github.com/SMHRD-GRAMY
+
 # 팀원
 - 팀 : GRAMy
 - 박종재 (팀장, Front-End)
