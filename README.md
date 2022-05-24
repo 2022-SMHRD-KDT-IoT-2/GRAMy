@@ -81,7 +81,17 @@
 <img width="978" alt="circuit" src="https://user-images.githubusercontent.com/66498240/169930831-f13fec70-2ef6-4ecd-8aa0-da9549e3c43c.png">
 
 
-## 활용사진 예시
+## 활용사진예시
+- 시제품 사진
+![KakaoTalk_Photo_2022-05-24-22-46-07](https://user-images.githubusercontent.com/66498240/170051151-f3f69839-4f9a-4a49-8d09-196ab4ac33cb.jpeg)
+
+- 웹
+<img width="758" alt="web" src="https://user-images.githubusercontent.com/66498240/170051781-677b6e34-effa-4912-a5a4-8c8959e495f5.png">
+
+- 어플리케이션
+<img width="993" alt="스크린샷 2022-05-24 오후 10 54 00" src="https://user-images.githubusercontent.com/66498240/170052914-75059892-cf62-4aaa-8077-4d28bb8655b1.png">
+
+
 
 ## 제작일정
 
