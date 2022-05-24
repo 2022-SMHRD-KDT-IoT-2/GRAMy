@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Helmet from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import FaceBookLogin from "../components/auth/FaceBookLogin";
+import KaKaoLogin from "../components/auth/KaKaoLogin";
+import NaverLogin from "../components/auth/NaverLogin";
+import { getCookie, setCookie } from "../components/auth/cookie";
+import { AppContext } from "../App";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+// 로그인
 
 const Login = () => {
+  const navigate = useNavigate();
+  const loginContext = useContext(AppContext);
+  const [alertOpen, setAlertOpen] = useState(false);
   const [input, setinput] = useState({
-    emaiil: "",
-    password: "",
+    userId: "",
+    userPw: "",
   });
 
   const onChangeInput = (e) => {
@@ -15,6 +28,40 @@ const Login = () => {
       [name]: value,
     });
   };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const url = "http://211.48.228.51:8082/login.do";
+    let data = { ...input }; // email, password 넘어감!
+    axios
+      .post(url, JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+          data,
+        },
+      })
+      .then((res, err) => {
+        setCookie("x_auth", {
+          user_id: res.data.user_id,
+          user_name: res.data.user_name,
+        });
+        loginContext.setIsLogin(true);
+        navigate("/");
+      })
+      .catch((err) => {
+        if (err) {
+          setAlertOpen(true);
+        }
+      });
+  };
+
+  const handleAlertClose = () => {
+    setAlertOpen(false);
+  };
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
   return (
     <>
@@ -34,7 +81,7 @@ const Login = () => {
                 placeholder="이메일 주소"
                 required
                 value={input.id}
-                name="email"
+                name="userId"
                 onChange={onChangeInput}
               />
               <input
@@ -43,13 +90,16 @@ const Login = () => {
                 placeholder="비밀번호"
                 required
                 value={input.pw}
-                name="password"
+                name="userPw"
                 onChange={onChangeInput}
               />
               <div className="flex  w-full justify-end mb-4 font-thin">
                 <Link to="/">비밀번호를 잊어버리셨나요?</Link>
               </div>
-              <button className=" bg-[#90C8B4] rounded-md text-white h-10 font-bold">
+              <button
+                onClick={handleLogin}
+                className=" bg-[#132C4D] rounded-md text-white h-10 font-bold hover:bg-[#284770] transition ease-in-out duration-150"
+              >
                 로그인
               </button>
             </form>
@@ -58,42 +108,18 @@ const Login = () => {
               소셜 아이디로 로그인
             </div>
             <div className=" flex flex-col items-center w-full h-full mb-20">
-              <a href="/" className="w-auto flex mb-5">
-                <img
-                  src="img/facebook.png"
-                  alt="페이스북 아이콘"
-                  className="w-[50px] h-[50px]"
-                />
-                <div className="w-[350px] h-[50px] bg-[#517AD5] flex items-center justify-center text-lg font-semibold text-white">
-                  페이스북 아이디로 로그인
-                </div>
-              </a>
-              <a href="/" className="w-auto flex mb-5">
-                <img
-                  src="img/kakao.jpeg"
-                  alt="카카오 아이콘"
-                  className="w-[50px] h-[50px]"
-                />
-                <div className="w-[350px] h-[50px] bg-[#FFD301] flex items-center justify-center text-lg font-semibold">
-                  카카오 아이디로 로그인
-                </div>
-              </a>
-              <a href="/" className="w-auto flex">
-                <img
-                  src="img/naver.png"
-                  alt="네이버 아이콘"
-                  className="w-[50px] h-[50px]"
-                />
-                <div className="w-[350px] h-[50px] bg-[#20CE00] flex items-center justify-center text-lg font-semibold text-white">
-                  네이버 아이디로 로그인
-                </div>
-              </a>
+              {/* 페이스북 로그인 */}
+              <FaceBookLogin />
+              {/* 카카오 로그인 */}
+              <KaKaoLogin />
+              {/* 네이버 로그인 */}
+              <NaverLogin />
             </div>
             {/* 회원가입 */}
             <hr className="mb-10" />
             <div className="w-full h-auto">
               <Link to="/join">
-                <div className="w-full h-10 bg-white rounded-md text-black font-bold flex justify-center items-center border border-black">
+                <div className="w-full h-10 bg-white rounded-md text-black font-bold flex justify-center items-center border border-black hover:bg-[#132C4D] hover:text-white transition ease-in-out duration-150">
                   회원가입
                 </div>
               </Link>
@@ -101,6 +127,19 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Snackbar
+        open={alertOpen}
+        autoHideDuration={6000}
+        onClose={handleAlertClose}
+      >
+        <Alert
+          onClose={handleAlertClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          아이디 또는 비밀번호가 틀렸습니다.
+        </Alert>
+      </Snackbar>
     </>
   );
 };

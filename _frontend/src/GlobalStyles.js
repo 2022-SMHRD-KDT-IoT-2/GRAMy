@@ -1,13 +1,20 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
-font-family: 'Source Sans Pro', sans-serif;
+
+
+@font-face {
+    font-family: 'GangwonEduPowerExtraBoldA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
+a, abbr, acronym, address, big, cite,
+del, dfn, img, kbd, q, s, samp,
+small, strike, tt, var,
 b, u, i, center,
 dl, dt, dd, menu, ol, ul, li,
 fieldset, form, label, legend,
@@ -19,7 +26,6 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -33,6 +39,8 @@ footer, header, hgroup, main, menu, nav, section {
 }
 body {
   line-height: 1;
+  font-family: "GangwonEduPowerExtraBoldA";
+  color: #272727;
 }
 menu, ol, ul {
   list-style: none;
@@ -54,7 +62,7 @@ table {
 }
 
 body {
-    background-color: #F4F6F6 ;
+    background-color: white ;
 }
 
 /* input type number  */

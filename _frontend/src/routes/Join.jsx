@@ -1,19 +1,22 @@
+import axios from "axios";
 import React, { useContext, useState, useRef } from "react";
 import Helmet from "react-helmet";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 import PopupDom from "../components/PopupDom";
 import PopupPostCode from "../components/PopupPostCode";
 
 const Join = () => {
   const ModalContext = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [input, setInput] = useState({
-    email: "",
-    password: "",
-    username: "",
-    phone: "",
-    gender: "",
-    address: "",
+    user_id: "",
+    user_pw: "",
+    user_name: "",
+    user_phone: "",
+    user_gender: "",
+    user_addr: "",
   });
 
   const [address, setAddress] = useState({
@@ -47,7 +50,8 @@ const Join = () => {
       [name]: value,
     });
     setInput({
-      address: `${address.zonecode} ${address.addr} ${value}`,
+      ...input,
+      user_addr: `${address.zonecode} ${address.addr} ${value}`,
     });
   };
 
@@ -59,7 +63,7 @@ const Join = () => {
     });
   };
 
-  const phoneAuth = (e) => {
+  const handlePhoneAuth = (e) => {
     e.preventDefault();
     console.log(input);
   };
@@ -76,6 +80,30 @@ const Join = () => {
     const { checked } = e.target;
     if (checked) {
       checkBoxes.forEach((i) => (i.current.checked = true));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await fetch("http://211.48.228.51:8082/join.do", {
+      method: "POST", // *GET, POST, PUT, DELETE 등
+      mode: "cors", // no-cors, *cors, same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, *same-origin, omit
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: "follow", // manual, *follow, error
+      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin
+      body: JSON.stringify(input),
+    });
+    let resultText = await result.text();
+    console.log(resultText);
+    if (resultText === "success") {
+      navigate("/login");
+    } else if (resultText === "fail") {
+      console.log("회원가입 실패 처리하기");
     }
   };
 
@@ -103,14 +131,14 @@ const Join = () => {
             <div className="font-semibold text-2xl w-full flex justify-center items-center mt-10 mb-5">
               회원가입
             </div>
-            <form className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit}>
               <input
                 className=" border-b-slate-700 border-b-[1px] h-10 mb-4 pl-2 focus:outline-none focus:border-slate-500 focus:ring-[3px] focus:ring-slate-500 transition-all duration-200"
                 type="email"
                 placeholder="이메일 주소 (필수)"
                 required
                 value={input.id}
-                name="email"
+                name="user_id"
                 onChange={onChangeInput}
               />
               <input
@@ -119,7 +147,7 @@ const Join = () => {
                 placeholder="비밀번호 (필수)"
                 required
                 value={input.pw}
-                name="password"
+                name="user_pw"
                 onChange={onChangeInput}
               />
               <input
@@ -128,7 +156,7 @@ const Join = () => {
                 placeholder="이름 (필수)"
                 required
                 value={input.username}
-                name="username"
+                name="user_name"
                 onChange={onChangeInput}
               />
               <div>
@@ -138,12 +166,12 @@ const Join = () => {
                   placeholder="전화번호 (-없이 입력) (필수)"
                   required
                   value={input.phone}
-                  name="phone"
+                  name="user_phone"
                   onChange={onChangeInput}
                 />
                 <button
-                  className="h-10 bg-[#90C8B4] rounded-md text-white font-bold w-28"
-                  onClick={phoneAuth}
+                  className="h-10 bg-[#132C4D] rounded-md text-white font-bold w-28 hover:bg-[#284770] transition ease-in-out duration-150"
+                  onClick={handlePhoneAuth}
                 >
                   인증 하기
                 </button>
@@ -154,9 +182,9 @@ const Join = () => {
                 <div className="flex items-center mr-1">
                   <span className="mr-2">남성</span>
                   <input
-                    className="focus:ring-2 focus:ring-green-300 text-green-300"
+                    className="focus:ring-2 focus:ring-blue-300 text-blue-300"
                     type="radio"
-                    name="gender"
+                    name="user_gender"
                     value="man"
                     onChange={onChangeInput}
                   />
@@ -164,9 +192,9 @@ const Join = () => {
                 <div className="flex items-center mr-1">
                   <span className="mr-2">여성</span>
                   <input
-                    className="focus:ring-2 focus:ring-green-300 text-green-300"
+                    className="focus:ring-2 focus:ring-blue-300 text-blue-300"
                     type="radio"
-                    name="gender"
+                    name="user_gender"
                     value="women"
                     onChange={onChangeInput}
                   />
@@ -176,7 +204,7 @@ const Join = () => {
                   <input
                     className="focus:ring-2 focus:ring-gray-500 text-gray-500"
                     type="radio"
-                    name="gender"
+                    name="user_gender"
                     value="nothing"
                     onChange={onChangeInput}
                   />
@@ -233,7 +261,7 @@ const Join = () => {
                   <div className="flex items-center">
                     {/* 전체 약관 동의 */}
                     <input
-                      className="mr-2 focus:ring-0 text-green-500"
+                      className="mr-2 focus:ring-0 text-[#3E72AF]"
                       type="checkbox"
                       onClick={checkAll}
                     />
@@ -242,7 +270,7 @@ const Join = () => {
                   <div className="flex items-center relative">
                     {/* GRAMy 이용 약관 동의 */}
                     <input
-                      className="mr-2 focus:ring-0 text-green-500"
+                      className="mr-2 focus:ring-0 text-[#3E72AF]"
                       type="checkbox"
                       ref={checkBox1}
                       required
@@ -261,7 +289,7 @@ const Join = () => {
                   <div className="flex items-center relative">
                     {/* 개인정보 취급 방침 동의 (필수) */}
                     <input
-                      className="mr-2 focus:ring-0 text-green-500"
+                      className="mr-2 focus:ring-0 text-[#3E72AF]"
                       type="checkbox"
                       ref={checkBox2}
                       required
@@ -280,7 +308,7 @@ const Join = () => {
                   <div className="flex items-center relative">
                     {/* 개인정보 취급 방침 동의 (선택) */}
                     <input
-                      className="mr-2 focus:ring-0 text-green-500"
+                      className="mr-2 focus:ring-0 text-[#3E72AF]"
                       type="checkbox"
                       ref={checkBox3}
                     />
@@ -297,7 +325,7 @@ const Join = () => {
                   </div>
                   <div className="flex items-center">
                     <input
-                      className="mr-2 focus:ring-0 text-green-500"
+                      className="mr-2 focus:ring-0 text-[#3E72AF]"
                       type="checkbox"
                       ref={checkBox4}
                     />
@@ -306,7 +334,7 @@ const Join = () => {
                 </div>
               </div>
               <input
-                className=" bg-[#90C8B4] rounded-md text-white h-10 font-bold cursor-pointer"
+                className=" bg-[#132C4D] rounded-md text-white h-10 font-bold cursor-pointer hover:bg-[#284770] transition ease-in-out duration-150"
                 type="submit"
                 value="회원가입"
               />
