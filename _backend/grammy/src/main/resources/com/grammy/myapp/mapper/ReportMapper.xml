@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grammy.myapp.mapper.TB_ReportMapper">
+<!-- 게시판 목록 -->
+<select id="AllList" resultType="com.grammy.myapp.domain.TB_ReportVO">
+	select report_seq,report_title,report_content,report_date,report_status,user_id,report_cnt,user_name from tb_report order by report_seq desc
+</select>
+<!-- 게시판 상세내용 -->
+<select id="DetailContent" resultType="com.grammy.myapp.domain.TB_ReportVO" >
+	select * from TB_report where report_seq=#{report_seq}
+</select>
+
+<!-- 게시판 삭제 -->
+<delete id="DeleteReport" parameterType="int">
+	delete from TB_Report where report_seq=#{report_seq}
+</delete>
+<!-- 게시판 업데이트 -->
+<update id="UpdateReport" parameterType="com.grammy.myapp.domain.TB_ReportVO">
+update TB_report set report_title=#{report_title},report_content=#{report_content} where report_seq=#{report_seq} 
+</update>
+<!-- 게시판 작성 -->
+<insert id="InsertReport" parameterType="com.grammy.myapp.domain.TB_ReportVO">
+insert into TB_report(report_seq,
+    report_title, 
+    report_content, 
+    report_date,
+    report_status, 
+    user_id,
+    report_cnt,
+    user_name) values(
+    tb_report_SEQ.nextval,
+    #{report_title}, 
+    #{report_content}, 
+    sysdate,
+    'n', 
+    #{user_id},
+    0,
+    #{user_name}
+    ) 
+</insert>
+<!-- 조회수 증가 -->
+<update id="viewCount" parameterType="com.grammy.myapp.domain.TB_ReportVO">
+update TB_report set report_cnt=report_cnt+1 where report_seq=#{report_seq}
+</update>
+
+<!-- 댓글리스트 가져오기 -->
+<select id="ReplyList" parameterType="int" resultType="com.grammy.myapp.domain.TB_ReplyVO">
+select reply_seq,report_seq,reply_content,reply_date,user_id,user_name from tb_reply where report_seq=#{report_seq} order by reply_seq desc
+</select>
+<!-- 댓글수정 -->
+<update id="UpdateReply" parameterType="com.grammy.myapp.domain.TB_ReplyVO">
+update tb_reply set reply_content=#{reply_content} where reply_seq=#{reply_seq}
+</update>
+<!-- 댓글작성 -->
+<insert id="InsertReply" parameterType="com.grammy.myapp.domain.TB_ReplyVO">
+insert into tb_reply(reply_seq,report_seq,reply_content,reply_date,user_id,user_name) values(tb_reply_SEQ.nextval,#{report_seq},#{reply_content},sysdate,#{user_id},#{user_name})
+</insert>
+<!-- 댓글 삭제 -->
+<delete id="DeleteReply" parameterType="int">
+delete from tb_reply where reply_seq=#{reply_seq}
+</delete>
+</mapper>

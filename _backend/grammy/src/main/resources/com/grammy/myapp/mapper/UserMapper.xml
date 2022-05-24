@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grammy.myapp.mapper.TB_UserMapper">
+<select id="selectAllList" resultType="com.grammy.myapp.domain.TB_UserVO">
+	select * from TB_user
+</select>
+	<select id="idCheck" resultType="int">
+		select count(*) from TB_user where user_id = #{user_id}
+	</select>
+	
+	<insert id="userJoin">
+	insert into tb_user(user_seq,user_id,user_pw,user_phone,user_addr,user_role,user_joindate,user_name,user_gender) 
+	values (tb_user_SEQ.nextval,#{user_id},#{user_pw},#{user_phone},#{user_addr},'user',sysdate,#{user_name},#{user_gender})
+	</insert>
+	<select id="selectOneList" resultType="com.grammy.myapp.domain.TB_UserVO">
+	select * from TB_User where user_id=#{user_id}
+	</select>
+	<update id="updateUser" parameterType="com.grammy.myapp.domain.TB_UserVO" >
+	update tb_user set user_pw=#{user_pw},user_phone=#{user_phone},user_addr=#{user_addr},user_name=#{user_name},user_gender=#{user_gender} where user_id=#{user_id}
+	</update>
+	<!-- 아이디찾기(이름과 폰번호) -->
+	<select id="findId" resultType="com.grammy.myapp.domain.TB_UserVO" parameterType="com.grammy.myapp.domain.TB_UserVO">
+	select user_id from TB_user where user_phone=#{user_phone} and user_name=#{user_name}
+	</select>
+	<!-- 비밀번호 찾기(이름 아이디 핸드폰번호) -->
+	<select id="findPw" resultType="com.grammy.myapp.domain.TB_UserVO" parameterType="com.grammy.myapp.domain.TB_UserVO">
+	select * from tb_user where user_id=#{user_id} and user_phone=#{user_phone} and user_name=#{user_name}
+	</select>
+	<!-- 비밀번호 수정하기 -->
+	<update id="modifyPw" parameterType="com.grammy.myapp.domain.TB_UserVO">
+	update tb_user set user_pw=#{user_pw} where user_id=#{user_id}
+	</update>
+</mapper>

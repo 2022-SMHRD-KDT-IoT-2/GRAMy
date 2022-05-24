@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grammy.myapp.mapper.TB_ProductMapper">
+<!-- 아이디 매개변수로 선반에 있는 제품 리스트 가져오기 -->
+<select id="stockList" parameterType="com.grammy.myapp.domain.TB_ShelfStockVO" resultType="com.grammy.myapp.domain.TB_ShelfStockVO">
+select sh.shelf_seq,sh.shelf_name,sh.user_id,st.stock_seq,st.stock_name
+from tb_shelf sh,tb_stock st
+where sh.shelf_seq=st.shelf_seq(+)
+and sh.user_id=#{user_id}
+and sh.shelf_seq = (select shelf_seq from tb_shelf where user_id=#{user_id} and rownum=1)
+</select>
+
+<!-- 선반번호로 선반에 있는 제품 리스트 가져오기 리턴할경우-->
+<select id="returnStockList" parameterType="com.grammy.myapp.domain.TB_ShelfStockVO" resultType="com.grammy.myapp.domain.TB_ShelfStockVO">
+select sh.shelf_seq,sh.shelf_name,sh.user_id,st.stock_seq,st.stock_name
+from tb_shelf sh,tb_stock st
+where sh.shelf_seq=st.shelf_seq(+)
+and sh.shelf_seq = #{shelf_seq}
+</select>
+
+<!-- 아이디를 통해 선반 리스트 가져오기 -->
+<select id="shelfList" parameterType="com.grammy.myapp.domain.TB_ShelfVO" resultType="com.grammy.myapp.domain.TB_ShelfVO">
+select * from TB_Shelf where user_id=#{user_id}
+</select>
+<!-- 선반 등록하기 -->
+<insert id="insertShelf" parameterType="com.grammy.myapp.domain.TB_ShelfVO">
+insert into TB_Shelf values(tb_shelf_seq.nextval,#{shelf_name},#{user_id})
+</insert>
+
+
+<!-- 물품(stock) 등록하기 -->
+<insert id="insertStock" parameterType="com.grammy.myapp.domain.TB_StockVO">
+insert into TB_Stock (stock_seq,stock_name,stock_weight,stock_date,stock_shelfLife,shelf_seq,stock_order)
+values(tb_stock_seq.nextval,#{stock_name},#{stock_weight},sysdate,#{stock_shelfLife},#{shelf_seq},#{stock_order})
+</insert>
+
+<!--물품(stock)  업데이트 하기 -->
+<update id="updateStock" parameterType="com.grammy.myapp.domain.TB_StockVO">
+update tb_stock set stock_name=#{stock_name},stock_weight=#{stock_weight},stock_shelfLife=#{stock_shelfLife},stock_order=#{stock_order} where stock_seq=#{stock_seq}
+</update>
+
+<!-- 물품 상세 무게 및 데이터 조회 -->
+<select id="detailItem" parameterType="com.grammy.myapp.domain.TB_StockDetailVO" resultType="com.grammy.myapp.domain.TB_StockDetailVO">
+select stock_seq,stock_name,stock_weight,stock_date,stock_shelfLife,stock_order,weight_value,weight_date
+from (select st.stock_seq,st.stock_name,st.stock_weight,st.stock_date,st.stock_shelfLife,st.stock_order,sw.weight_value,sw.weight_date
+from tb_stock st,tb_stock_weight sw
+where st.stock_seq=sw.stock_seq(+)
+and st.stock_seq=#{stock_seq}
+order by sw.weight_seq desc)
+where rownum=1
+</select>
+<!-- 물품 무게 테이블 insert문으로 넣어주기 -->
+<insert id="insertWeight" parameterType="com.grammy.myapp.domain.TB_Stock_WeightVO">
+insert into TB_stock_weight(weight_seq,stock_seq,weight_value,weight_date) values (tb_stock_weight_SEQ.nextval,#{stock_seq},#{weight_value},sysdate)
+</insert>
+<!-- 물품 무게 테이블 업데이트 -->
+<update id="updateWeight" parameterType="com.grammy.myapp.domain.TB_Stock_WeightVO">
+update TB_stock_weight set weight_value=#{weight_value} where stock_seq=#{stock_seq}
+</update>
+<!--  물품 무게 가져오기 -->
+<select id="getWeight" resultType="com.grammy.myapp.domain.TB_Stock_WeightVO" parameterType="com.grammy.myapp.domain.TB_Stock_WeightVO">
+select weight_value from tb_stock_weight where stock_seq=#{stock_seq}
+</select>
+</mapper>
