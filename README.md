@@ -82,9 +82,6 @@
 
 
 ## 활용사진예시
-- 시제품 사진
-![KakaoTalk_Photo_2022-05-24-22-46-07](https://user-images.githubusercontent.com/66498240/170051151-f3f69839-4f9a-4a49-8d09-196ab4ac33cb.jpeg)
-
 - 웹
 <img width="758" alt="web" src="https://user-images.githubusercontent.com/66498240/170051781-677b6e34-effa-4912-a5a4-8c8959e495f5.png">
 
