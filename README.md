@@ -74,11 +74,12 @@
 ## 기능 흐름도
 <img width="722" alt="function flow" src="https://user-images.githubusercontent.com/66498240/169930430-f6514419-587a-4907-8fd4-4ea6a8b57baa.png">
 
-
 ## 사용 부품
 <img width="849" alt="useparts" src="https://user-images.githubusercontent.com/66498240/169930153-7e087589-91b6-40e8-9654-40a348cef6ad.png">
 
 ## 회로도
+<img width="978" alt="circuit" src="https://user-images.githubusercontent.com/66498240/169930831-f13fec70-2ef6-4ecd-8aa0-da9549e3c43c.png">
+
 
 ## 활용사진 예시
 
