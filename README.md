@@ -66,3 +66,19 @@
 - 서버 환경 : Tomcat 9.0
 - 사용 DB : Oracle
 - 하드웨어 : Raspberry pi
+
+## 대표 이미지
+
+<img width="1680" alt="img1" src="https://user-images.githubusercontent.com/66498240/169929290-669fb623-5b02-49fa-b83a-72d75743043d.png">
+
+## 기능 흐름도
+
+## 사용 부품
+
+## 회로도
+
+## 활용사진 예시
+
+## 제작일정
+
+## 팀원 단위 업무 분담 및 결과표
